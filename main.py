@@ -33,6 +33,7 @@ glBufferData(GL_ARRAY_BUFFER,
              array_type(*vertex_data_triangle),
              GL_STATIC_DRAW)
 
+#connection to vertex shader (in-attributes)
 attr_id = 0
 glVertexAttribPointer(
     attr_id,            # attribute 0.
@@ -45,12 +46,12 @@ glVertexAttribPointer(
 glEnableVertexAttribArray(attr_id)
 
 
-while (glfw.get_key(window, glfw.KEY_ESCAPE) != glfw.PRESS and not glfw.window_should_close(window)
-):
+while (glfw.get_key(window, glfw.KEY_ESCAPE) != glfw.PRESS and not glfw.window_should_close(window)):
+    #clear buffer first
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+    #general approach to draw an object: activate shader, bind VAO, call draw
     glUseProgram(shader_program_triangle)
-
     glBindVertexArray(vao_triangle)
     glDrawArrays(GL_TRIANGLES, 0, 3)
 
@@ -59,3 +60,4 @@ while (glfw.get_key(window, glfw.KEY_ESCAPE) != glfw.PRESS and not glfw.window_s
     glfw.poll_events()
 
 glfw.terminate()
+
