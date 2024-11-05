@@ -8,6 +8,5 @@ void main()
     // output vertex position
     gl_Position = vec4(in_vertex, 1.0);
     // output vertex color
-    vec3 fake_color = vec3(1.0,0.5,0.1);
-    v_color = vec4(fake_color, 1.0);
+    v_color = vec4(in_color, 1.0);
 }
