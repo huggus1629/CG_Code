@@ -37,6 +37,8 @@ indices = np.array([
     1, 5, 2, 2, 5, 6  # Right face
 ], dtype=np.uint32)
 
+colors = np.random.rand(vertices.size).astype(np.float32)
+
 glFrontFace(GL_CW) # defines the winding order, i.e. which side of the triangle is up
 glEnable(GL_DEPTH_TEST) # makes sure that the distances to camera of objects are compared
 glDepthFunc(GL_LESS) # tells the depth test to render the fragment with the least depth
@@ -58,6 +60,15 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.nbytes, indices, GL_STATIC_DRAW)
 #connection to vertex shader (in-attributes)
 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * vertices.itemsize, ctypes.c_void_p(0))
 glEnableVertexAttribArray(0)
+
+# VBO for colors
+color_buffer_cube = glGenBuffers(1)
+glBindBuffer(GL_ARRAY_BUFFER, color_buffer_cube)
+glBufferData(GL_ARRAY_BUFFER, colors.nbytes, colors, GL_STATIC_DRAW)
+
+#connection to vertex shader (in-attributes)
+glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * colors.itemsize, ctypes.c_void_p(0))
+glEnableVertexAttribArray(1)
 
 camera_position = glm.vec3(10,10,10)
 view_matrix = glm.lookAt(camera_position, glm.vec3(0, 0, 0), glm.vec3(0, 1, 0)) # camera position, camera target, up vector
